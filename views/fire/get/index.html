@@ -1,0 +1,89 @@
+{{ define "content" }}
+<div class="col-lg-12 stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive pt-3">
+        <table class="table">
+          <tbody>
+            <tr>
+              {{ range $Fire := .Fire }}
+              <td class="text-center">
+                <img id="SSImage" style="width: 50%; height: 50%; max-width: 500px; object-fit: contain; border-radius: 0%; border: 1px solid black; display: block; margin-left: auto; margin-right: auto;" src="">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>ID</h3>
+                <pre><span>{{ $Fire.RandomID }}</span></pre>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>Browser Informations</h3>
+                <pre><span>
+{ {{ range $key, $value := $Fire.BrowserInformations }}
+  {{ if eq $key "localStorageData" }} <b>{{ $key }}:</b> { {{ range $key2, $value2 := $value}}
+    {{ $key2 }}: {{ $value2 }} {{end}}
+  }{{ else }} <b>{{ $key }}:</b> {{ $value }}{{ end }}{{ end }}
+}               </span></pre>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>User Informations</h3>
+                <pre><span>
+{ {{ range $key, $value := $Fire.UserInformations }}
+{{ if eq $key "Location" }} <b>{{ $key }}:</b> { {{ range $key2, $value2 := $value}}
+    {{ $key2 }}: {{ $value2 }} {{end}}
+  }{{ else }} <b>{{ $key }}:</b> {{ $value }}{{ end }}{{ end }}
+}               </span></pre>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>Site Informations</h3>
+                <pre><span>
+{ {{ range $key, $value := $Fire.SiteInformations }}
+{{ if eq $key "Headers" }} <b>{{ $key }}:</b> { {{ range $key2, $value2 := $value}}
+    {{ $key2 }}: {{ $value2 }} {{end}}
+  }{{ else }} <b>{{ $key }}:</b> {{ $value }}{{ end }}{{ end }}
+}               </span></pre>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h3>Cookies</h3>
+                <pre><span>
+{ {{ range $key, $value := $Fire.Cookies }}
+<b>{{ $key }}:</b> { {{ range $key2, $value2 := $value}}
+    {{ if ne $key2 "" }}{{ $key2 }}: {{ $value2 }} {{end}} {{end}}
+  }{{ end }}
+}               </span></pre>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="/data/{{ $Fire.RandomID }}_html.html" download target="_blank" class="btn btn-primary btn-icon-text">
+                  <i class="ti-download btn-icon-prepend"></i>                                                    
+                  Download Source Code
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var image = document.getElementById("SSImage");
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/data/{{ $Fire.RandomID }}_image.txt", false);
+  xhr.send();
+  
+  image.src = xhr.responseText;
+  console.log(xhr.responseText);
+</script>
+{{ end }}
+{{ end }}

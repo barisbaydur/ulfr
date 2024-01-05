@@ -1,0 +1,58 @@
+{{ define "content" }}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      
+      <div class="card-body">
+        <h4 class="card-title">Domains <a class="btn btn-primary float-right" href="/domain/create">Create</a></h4>
+        <p class="card-description">
+          Listing All Domains
+        </p>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  ID
+                </th>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Description
+                </th>
+                <th>
+                  Creation Date
+                </th>
+                <th>
+                  Operations
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {{ range $value := .Domains }}
+              <tr>
+                <td>
+                  {{ $value.ID }}
+                </td>
+                <td>
+                  {{ $value.Name }}
+                </td>
+                <td>
+                  {{ $value.Description }}
+                </td>
+                <td>
+                  {{ $value.CreatedAt }}
+                </td>
+                <td>
+                  <a href="/domain/update/{{ $value.ID }}" class="btn btn-inverse-primary btn-fw">Edit</a>
+                  <a href="/domain/delete/{{ $value.ID }}" class="btn btn-inverse-danger btn-fw">Delete</a>
+                </td>
+              </tr>
+              {{ end }}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{{ end }}

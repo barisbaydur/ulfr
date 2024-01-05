@@ -1,0 +1,56 @@
+{{ define "content" }}
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Create a Paths</h4>
+      <p class="card-description">
+        create a Paths
+      </p>
+      <form class="forms-sample" action="/path/create" method="POST">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+        </div>
+        <div class="form-group">
+          <label>Domain</label>
+          <select class="js-example-basic-single w-100" data-select2-id="1" tabindex="-1" aria-hidden="true" id="domain" name="domain">
+            {{ range $value := .Domains }}
+            <option value="{{ $value.ID }}" data-select2-id="{{ $value.ID }}">{{ $value.Name }}</option>
+            {{ end }}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" id="description" name="description" rows="4" placeholder="Description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="name">Value</label>
+          <input type="text" class="form-control" id="value" name="value" placeholder="Name">
+        </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Type</label>
+            <div class="col-sm-4">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="radio" class="form-check-input" name="type" id="type" value="1" checked="">
+                  SubDomain
+                <i class="input-helper"></i></label>
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="radio" class="form-check-input" name="type" id="type" value="2">
+                  Path
+                <i class="input-helper"></i></label>
+              </div>
+            </div>
+          </div>
+        <button type="submit" class="btn btn-primary mr-2">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{{ end }}

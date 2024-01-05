@@ -1,0 +1,52 @@
+{{ define "content"}}
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    
+    <div class="card-body">
+      <h4 class="card-title" style="color: white;">B00M!</h4>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>
+                ID
+              </th>
+              <th>
+                Triggered URL
+              </th>
+              <th>
+                Affected URL
+              </th>
+              <th>
+                Creation Date
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{ range $value := .Fires }}
+            <tr>
+              <td>
+                {{ $value.RandomID }}
+              </td>
+              <td>
+                {{ $value.URL }}
+              </td>
+              <td>
+                {{ $value.BrowserInformations.fullURL }}
+              </td>
+              <td>
+                {{ $value.CreatedAt }}
+              </td>
+              <td>
+                <a href="/fire/show/{{ $value.RandomID }}" class="btn btn-inverse-primary btn-fw">Show</a>
+                <a href="/fire/delete/{{ $value.RandomID }}" class="btn btn-inverse-danger btn-fw">Delete</a>
+              </td>
+            </tr>
+            {{ end }}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

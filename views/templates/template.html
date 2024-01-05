@@ -1,0 +1,30 @@
+{{ define "template" }}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Ulfr | Dashboard</title>
+  {{ template "header" }}
+</head>
+<body>
+  <div class="container-scroller">
+    {{ template "navbar" }}
+    
+    <div class="container-fluid page-body-wrapper">
+      
+      {{ template "sidebar" }}
+      
+      <div class="main-panel">
+        <div class="content-wrapper">
+          {{ template "content" . }}
+        </div>
+        {{ template "footer" }}
+      </div>
+    </div>
+  </div>
+
+  {{ template "footerScripts" }}
+</body>
+
+</html>
+{{ end }}

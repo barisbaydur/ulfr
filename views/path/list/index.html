@@ -1,0 +1,76 @@
+{{ define "content" }}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      
+      <div class="card-body">
+        <h4 class="card-title">Paths <a class="btn btn-primary float-right" href="/path/create">Create</a></h4>
+        <p class="card-description">
+          Listing All Paths
+        </p>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  ID
+                </th>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Description
+                </th>
+                <th>
+                  Domain
+                </th>
+                <th>
+                  Value
+                </th>
+                <th>
+                  Type
+                </th>
+                <th>
+                  Creation Date
+                </th>
+                <th>
+                  Operations
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {{ range $value := .Paths }}
+              <tr>
+                <td>
+                  {{ $value.ID }}
+                </td>
+                <td>
+                  {{ $value.Name }}
+                </td>
+                <td>
+                  {{ $value.Description }}
+                </td>
+                <td>
+                  {{ $value.Domain }}
+                </td>
+                <td>
+                  {{ $value.Value }}
+                </td>
+                <td>
+                  {{ if eq $value.Type 1 }} SubDomain {{ else }} Path {{ end }}
+                </td>
+                <td>
+                  {{ $value.CreatedAt }}
+                </td>
+                <td>
+                  <a href="/path/update/{{ $value.ID }}" class="btn btn-inverse-primary btn-fw">Edit</a>
+                  <a href="/path/delete/{{ $value.ID }}" class="btn btn-inverse-danger btn-fw">Delete</a>
+                </td>
+              </tr>
+              {{ end }}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{{ end }}
