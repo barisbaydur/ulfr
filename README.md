@@ -76,7 +76,8 @@ example: domain.com/xss
 2. Create as a subdomain
 example: xss.domain.com
 
-:bulb: Paths are not case sensitive.
+> [!TIP]
+> Paths are not case sensitive.
 
 ### >_ Features
 
@@ -101,8 +102,8 @@ example: xss.domain.com
     * Cookies (CORS HTTP-ONLY Bypass) (Not Implemented Yet)
     * Cookies (Trace Method)
 
-!!! note
-    Do not run the application behind a tool like nginx and apache.
+> [!NOTE]  
+> Do not run the application behind a tool like nginx and apache.
 
 ### >_ Example Payloads
 
