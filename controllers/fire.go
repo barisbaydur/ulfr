@@ -169,7 +169,7 @@ func FireULFR(w http.ResponseWriter, r *http.Request) {
 	subdomainURL := strings.Split(domainURL, ".")
 	obj := new(models.Domain)
 
-	if len(subdomainURL) == 2 {
+	if len(subdomainURL) == 2 || validIP4(strings.Join(subdomainURL, ".")) {
 		if err := dbi.Find2(obj, map[string]interface{}{"name": domainURL}); err != nil {
 			panic(err)
 		}
