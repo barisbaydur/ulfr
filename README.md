@@ -68,6 +68,9 @@ First of all, you must register a domain. There are two steps for this.
 
 2. You must register the domain name on the domain page.
 
+> [!TIP]
+> If you do not have a domain address, you must register your IP address to Domain page at this stage.
+
 After this stage, you must add a path from the path page. There are two options for this.
 
 1. Crate as a path.
