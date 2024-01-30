@@ -17,9 +17,9 @@
         </div>
         <div class="form-group">
           <label>Domains</label>
-          <select class="js-example-basic-single w-100" data-select2-id="1" tabindex="-1" aria-hidden="true" id="domain" name="domain">
+          <select class="js-example-basic-single w-100" tabindex="-1" aria-hidden="true" id="domain" name="domain">
             {{ range $value := $Domain }}
-            <option value="{{ $value.ID }}" data-select2-id="{{ $value.ID }}" {{ if eq $value.ID $Path.Domain }} selected {{ end }}>{{ $value.Name }}</option>
+            <option value="{{ $value.ID }}" {{ if eq $value.ID $Path.Domain }} selected {{ end }}>{{ $value.Name }}</option>
             {{ end }}
           </select>
         </div>
